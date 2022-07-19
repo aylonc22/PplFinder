@@ -1,20 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const usePeopleFetch = () => {
+export const usePeopleFetch = (page) => {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const USERS_URL = "https://randomuser.me/api/?results=25&page=1";
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  async function fetchUsers() {
+    let cancel;
+    setError(false);
     setIsLoading(true);
-    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
-    setIsLoading(false);
-    setUsers(response.data.results);
-  }
+    axios({
+      method: "GET",
+      url: USERS_URL,
+      cancelToken: new axios.CancelToken((c) => (cancel = c)),
+    })
+      .then((res) => {
+        setUsers((users) => [...users, ...res.data.results]);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        if (axios.isCancel(e)) return;
+        setError(true);
+      });
+    return () => cancel();
+  }, [page]);
 
-  return { users, isLoading, fetchUsers };
+  return { users, isLoading, error };
 };
