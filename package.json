@@ -1,7 +1,6 @@
 {
   "name": "ppl-finder",
   "version": "1.0.7",
-  "homepage": "https://aylonc22.github.io/PplFinder",
   "bin": "./bin/cli.js",
   "license": "MIT",
   "repository": "https://github.com/powerlink/PplFinder",
@@ -23,8 +22,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -49,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.5.4",
-    "gh-pages": "^4.0.0"
+    "@babel/eslint-parser": "^7.5.4"
   }
 }
