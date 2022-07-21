@@ -13,6 +13,9 @@ export const List = styled.div`
   height: calc(100vh - 270px);
   margin-block-start: 30px;
   overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
 `;
 
 export const User = styled.div`
@@ -41,6 +44,7 @@ export const SpinnerWrapper = styled.div`
 `;
 
 export const IconButtonWrapper = styled.div`
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
@@ -53,4 +57,12 @@ export const Filters = styled.div`
   & > * {
     margin-inline-end: 8px;
   }
+`;
+
+export const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  hieght: 50px;
+  overflow: y;
 `;

@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
-const UserList = ({ users, isLoading, error, setPage }) => {
+const UserList = ({ users, isLoading, error, setPage, isSearch, getItems }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
   const [countries, setCountries] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -35,6 +35,7 @@ const UserList = ({ users, isLoading, error, setPage }) => {
       localStorage.setItem("items", JSON.stringify(filterFavorites));
       setFavorites(filterFavorites);
     }
+    getItems && getItems();
   };
   const handleMouseEnter = (index) => {
     setHoveredUserId(index);
@@ -50,7 +51,7 @@ const UserList = ({ users, isLoading, error, setPage }) => {
   const observer = useRef();
   const lastUserRef = useCallback(
     (user) => {
-      if (isLoading || isLoading === undefined) return;
+      if (isSearch || isLoading || isLoading === undefined) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
@@ -87,7 +88,6 @@ const UserList = ({ users, isLoading, error, setPage }) => {
                   key={index}
                   onMouseEnter={() => {
                     handleMouseEnter(index);
-                    console.log("HERE");
                   }}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -158,10 +158,15 @@ const UserList = ({ users, isLoading, error, setPage }) => {
               );
           }
         })}
-        {isLoading && (
+        {!isSearch && !error && isLoading && (
           <S.SpinnerWrapper>
             <Spinner color="primary" size="45px" thickness={6} variant="indeterminate" />
           </S.SpinnerWrapper>
+        )}
+        {error && (
+          <S.Error>
+            <Text>Error Occurred</Text>
+          </S.Error>
         )}
       </S.List>
     </S.UserList>

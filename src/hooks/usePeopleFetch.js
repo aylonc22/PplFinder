@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+//axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 export const usePeopleFetch = (page) => {
   const [users, setUsers] = useState([]);
